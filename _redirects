@@ -1,0 +1,8 @@
+# Cloudflare Pages — Redirects
+# bolimulah.sinfia.net
+
+# Force HTTPS (Cloudflare handles this, but good to have)
+http://bolimulah.sinfia.net/* https://bolimulah.sinfia.net/:splat 301
+
+# Redirect www to non-www if ever needed
+https://www.bolimulah.sinfia.net/* https://bolimulah.sinfia.net/:splat 301
