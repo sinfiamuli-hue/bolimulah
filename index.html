@@ -199,32 +199,138 @@
   </div>
 </section>
 
-<!-- ── GALLERY ── -->
-<section id="gallery">
-  <div class="container">
-    <p class="section-label">Media</p>
-    <h2 class="section-title">Gallery & Moments</h2>
-    <div class="divider"></div>
-    <p class="section-body">Capturing dynamic energy, cultural attire, and rhythmic performances on stage.</p>
+<!-- ============================================================
+     GALLERY SECTION — Ekuveri Boli Mulah
+     Replace your existing <section id="gallery">...</section>
+     block entirely with everything below (down to </section>).
+     The lightbox markup at the bottom (#lightbox) replaces your
+     existing lightbox markup.
+     ============================================================ -->
 
-    <div class="gallery-grid">
-      <div class="gallery-item reveal" onclick="openLightbox('images/AriphPhotos-17.webp')">
-        <img src="images/AriphPhotos-17.webp" alt="Performance Photo" loading="lazy">
-        <div class="gallery-overlay"><span>Performance</span></div>
-      </div>
-      <div class="gallery-item reveal" style="transition-delay:0.05s;" onclick="openLightbox('images/AriphPhotos-80.webp')">
-        <img src="images/AriphPhotos-80.webp" alt="Ensemble Group" loading="lazy">
-        <div class="gallery-overlay"><span>Ensemble</span></div>
-      </div>
-      <div class="gallery-item reveal" style="transition-delay:0.1s;" onclick="openLightbox('images/AriphPhotos-95.webp')">
-        <img src="images/AriphPhotos-95.webp" alt="Boduberu Drums" loading="lazy">
-        <div class="gallery-overlay"><span>Boduberu</span></div>
-      </div>
-      <div class="gallery-item reveal" style="transition-delay:0.15s;" onclick="openLightbox('images/AriphPhotos-79.webp')">
-        <img src="images/AriphPhotos-79.webp" alt="Festival Showcase" loading="lazy">
-        <div class="gallery-overlay"><span>Festival Showcase</span></div>
-      </div>
+<section id="gallery" class="gallery-section" aria-labelledby="gallery-heading">
+  <div class="gallery-container">
+
+    <!-- Section Header -->
+    <div class="gallery-header reveal">
+      <span class="gallery-eyebrow">Visual Stories</span>
+      <h2 id="gallery-heading" class="gallery-title">Moments in Motion</h2>
+      <p class="gallery-description">
+        Discover unforgettable performances, cultural celebrations, powerful Boduberu
+        rhythms, and memorable moments that showcase the spirit of Ekuveri Boli Mulah.
+      </p>
     </div>
+
+    <!-- Gallery Grid -->
+    <div class="gallery-grid" id="galleryGrid">
+
+      <!-- ===== GALLERY CARD TEMPLATE =====
+           To add a new photo: duplicate one <figure class="gallery-card">
+           block, bump the number in image src + data-index, and write
+           a new caption. That's it — nothing else needs to change. -->
+
+      <figure class="gallery-card reveal" data-index="0">
+        <button class="gallery-card-btn" type="button" aria-label="Open Stage Performance photo in lightbox">
+          <img
+            src="images/gallery/Image1.webp"
+            alt="Ekuveri Boli Mulah performers on stage during a live Boduberu performance"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="750"
+          />
+          <span class="gallery-overlay">
+            <span class="gallery-overlay-content">
+              <svg class="gallery-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+              <span class="gallery-card-title">Stage Performance</span>
+            </span>
+          </span>
+        </button>
+      </figure>
+
+      <figure class="gallery-card reveal" data-index="1">
+        <button class="gallery-card-btn" type="button" aria-label="Open Cultural Celebration photo in lightbox">
+          <img
+            src="images/gallery/Image2.webp"
+            alt="Ensemble members dressed in traditional Maldivian attire during a cultural celebration"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="750"
+          />
+          <span class="gallery-overlay">
+            <span class="gallery-overlay-content">
+              <svg class="gallery-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+              <span class="gallery-card-title">Cultural Celebration</span>
+            </span>
+          </span>
+        </button>
+      </figure>
+
+      <figure class="gallery-card reveal" data-index="2">
+        <button class="gallery-card-btn" type="button" aria-label="Open Traditional Rhythm photo in lightbox">
+          <img
+            src="images/gallery/Image3.webp"
+            alt="Close-up of Boduberu drums being played during a traditional rhythm sequence"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="750"
+          />
+          <span class="gallery-overlay">
+            <span class="gallery-overlay-content">
+              <svg class="gallery-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+              <span class="gallery-card-title">Traditional Rhythm</span>
+            </span>
+          </span>
+        </button>
+      </figure>
+
+      <figure class="gallery-card reveal" data-index="3">
+        <button class="gallery-card-btn" type="button" aria-label="Open Festival Night photo in lightbox">
+          <img
+            src="images/gallery/Image4.webp"
+            alt="Ekuveri Boli Mulah performing during a festival night showcase"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="750"
+          />
+          <span class="gallery-overlay">
+            <span class="gallery-overlay-content">
+              <svg class="gallery-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+              <span class="gallery-card-title">Festival Night</span>
+            </span>
+          </span>
+        </button>
+      </figure>
+
+      <!-- ===== ADD MORE CARDS HERE BY COPYING ABOVE ===== -->
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LIGHTBOX — replaces your existing lightbox markup
+     ============================================================ -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Gallery image viewer" hidden>
+  <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close gallery viewer">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" type="button" aria-label="Previous photo">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+  <div class="lightbox-stage">
+    <img class="lightbox-image" id="lightboxImage" src="" alt="" />
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
+
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" type="button" aria-label="Next photo">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+</div>
 
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
