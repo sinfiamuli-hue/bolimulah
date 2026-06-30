@@ -17,6 +17,7 @@
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/gallery.css">
 </head>
 <body>
 
@@ -201,18 +202,15 @@
 
 <!-- ============================================================
      GALLERY SECTION — Ekuveri Boli Mulah
-     Replace your existing <section id="gallery">...</section>
-     block entirely with everything below (down to </section>).
-     The lightbox markup at the bottom (#lightbox) replaces your
-     existing lightbox markup.
+     Built for LARGE photo libraries (hundreds/thousands of photos)
+     without slowing the page down. Photos load in small batches as
+     the visitor scrolls, instead of all at once.
 
-     NOTE: The gallery cards are now generated AUTOMATICALLY by
-     gallery.js. You do NOT need to add or edit any <figure> blocks
-     here ever again. To add a new photo:
-       1. Upload Images/ImageN.webp (next number) to your repo's
-          existing "Images" folder
-       2. Open gallery.js and add one caption line at the top
-          (or skip it — a default caption will be used)
+     TO ADD NEW PHOTOS:
+       1. Upload Images/ImageN.webp (next sequential number) to the
+          existing "Images" folder in the repo root.
+       2. Open images-manifest.json (repo root) and update "count"
+          to your new total.
      That's it. Nothing in this HTML file needs to change.
      ============================================================ -->
 
@@ -233,6 +231,18 @@
     <div class="gallery-grid" id="galleryGrid" aria-live="polite">
       <!-- Cards are inserted here at runtime. Leave this empty. -->
     </div>
+
+    <!-- Load More button — shown only while more photos remain -->
+    <div class="gallery-load-more-wrap">
+      <button type="button" id="galleryLoadMore" class="gallery-load-more" hidden>
+        Load More Photos
+      </button>
+    </div>
+
+    <!-- Invisible sentinel — triggers auto-loading the next batch
+         when scrolled into view (infinite scroll). The button
+         above still works as a manual/accessible fallback. -->
+    <div id="galleryScrollSentinel" aria-hidden="true"></div>
 
   </div>
 </section>
@@ -273,6 +283,7 @@
 
 <!-- JavaScript -->
 <script src="js/main.js"></script>
+<script src="js/gallery.js"></script>
 
 </body>
 </html>
