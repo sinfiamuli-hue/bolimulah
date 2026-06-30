@@ -205,6 +205,15 @@
      block entirely with everything below (down to </section>).
      The lightbox markup at the bottom (#lightbox) replaces your
      existing lightbox markup.
+
+     NOTE: The gallery cards are now generated AUTOMATICALLY by
+     gallery.js. You do NOT need to add or edit any <figure> blocks
+     here ever again. To add a new photo:
+       1. Upload Images/ImageN.webp (next number) to your repo's
+          existing "Images" folder
+       2. Open gallery.js and add one caption line at the top
+          (or skip it — a default caption will be used)
+     That's it. Nothing in this HTML file needs to change.
      ============================================================ -->
 
 <section id="gallery" class="gallery-section" aria-labelledby="gallery-heading">
@@ -220,93 +229,11 @@
       </p>
     </div>
 
-    <!-- Gallery Grid -->
-    <div class="gallery-grid" id="galleryGrid">
-
-      <!-- ===== GALLERY CARD TEMPLATE =====
-           To add a new photo: duplicate one <figure class="gallery-card">
-           block, bump the number in image src + data-index, and write
-           a new caption. That's it — nothing else needs to change. -->
-
-      <figure class="gallery-card reveal" data-index="0">
-        <button class="gallery-card-btn" type="button" aria-label="Open Stage Performance photo in lightbox">
-          <img
-            src="images/gallery/Image1.webp"
-            alt="Ekuveri Boli Mulah performers on stage during a live Boduberu performance"
-            loading="lazy"
-            decoding="async"
-            width="600"
-            height="750"
-          />
-          <span class="gallery-overlay">
-            <span class="gallery-overlay-content">
-              <svg class="gallery-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-              <span class="gallery-card-title">Stage Performance</span>
-            </span>
-          </span>
-        </button>
-      </figure>
-
-      <figure class="gallery-card reveal" data-index="1">
-        <button class="gallery-card-btn" type="button" aria-label="Open Cultural Celebration photo in lightbox">
-          <img
-            src="images/gallery/Image2.webp"
-            alt="Ensemble members dressed in traditional Maldivian attire during a cultural celebration"
-            loading="lazy"
-            decoding="async"
-            width="600"
-            height="750"
-          />
-          <span class="gallery-overlay">
-            <span class="gallery-overlay-content">
-              <svg class="gallery-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-              <span class="gallery-card-title">Cultural Celebration</span>
-            </span>
-          </span>
-        </button>
-      </figure>
-
-      <figure class="gallery-card reveal" data-index="2">
-        <button class="gallery-card-btn" type="button" aria-label="Open Traditional Rhythm photo in lightbox">
-          <img
-            src="images/gallery/Image3.webp"
-            alt="Close-up of Boduberu drums being played during a traditional rhythm sequence"
-            loading="lazy"
-            decoding="async"
-            width="600"
-            height="750"
-          />
-          <span class="gallery-overlay">
-            <span class="gallery-overlay-content">
-              <svg class="gallery-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-              <span class="gallery-card-title">Traditional Rhythm</span>
-            </span>
-          </span>
-        </button>
-      </figure>
-
-      <figure class="gallery-card reveal" data-index="3">
-        <button class="gallery-card-btn" type="button" aria-label="Open Festival Night photo in lightbox">
-          <img
-            src="images/gallery/Image4.webp"
-            alt="Ekuveri Boli Mulah performing during a festival night showcase"
-            loading="lazy"
-            decoding="async"
-            width="600"
-            height="750"
-          />
-          <span class="gallery-overlay">
-            <span class="gallery-overlay-content">
-              <svg class="gallery-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-              <span class="gallery-card-title">Festival Night</span>
-            </span>
-          </span>
-        </button>
-      </figure>
-
-      <!-- ===== ADD MORE CARDS HERE BY COPYING ABOVE ===== -->
-
+    <!-- Gallery Grid — populated automatically by gallery.js -->
+    <div class="gallery-grid" id="galleryGrid" aria-live="polite">
+      <!-- Cards are inserted here at runtime. Leave this empty. -->
     </div>
+
   </div>
 </section>
 
@@ -331,14 +258,6 @@
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </button>
 </div>
-
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-      <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-      <img id="lightbox-img" src="" alt="Gallery Photo">
-    </div>
-  </div>
-</section>
 
 <!-- ── FOOTER ── -->
 <footer>
