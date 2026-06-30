@@ -1,42 +1,73 @@
 /* ============================================================
    GALLERY + LIGHTBOX SCRIPT — Ekuveri Boli Mulah
-   Add this block before </body>, or in your existing main JS file.
-   Vanilla JS only — no dependencies.
+   Built for LARGE photo libraries (hundreds or thousands of
+   images) without slowing the page down.
 
-   HOW TO ADD A NEW PHOTO FROM NOW ON:
-   1. Upload images/gallery/ImageN.webp (next sequential number)
-   2. (Optional) add a caption for it in the CAPTIONS list below —
-      if you skip this, it'll just use a default caption.
-   3. Done. The HTML never needs to be touched again.
+   HOW IT WORKS:
+   - images-manifest.json (repo root) stores ONE number: the
+     total count of photos you have, e.g. {"count": 4}.
+   - On page load, only the FIRST BATCH (24 photos) is loaded.
+   - More photos load automatically as the visitor scrolls near
+     the bottom of the gallery (infinite scroll), or by clicking
+     "Load More" (works without JS scroll events too — good for
+     accessibility / keyboard users).
+   - Real image files are only requested once they're actually
+     about to be shown, and lazy-loaded by the browser besides.
+
+   TO ADD NEW PHOTOS:
+   1. Upload Image5.webp, Image6.webp, etc. to Images/
+   2. Open images-manifest.json and update "count" to match your
+      new total.
+   That's the only file you ever touch.
+
+   OPTIONAL CAPTIONS:
+   Add a line to the CAPTIONS list below if you want a specific
+   photo to have a custom title instead of the rotating defaults.
    ============================================================ */
 
 (function () {
   "use strict";
 
   // ----------------------------------------------------------
-  // 1. CAPTIONS — add one line per image here if you want a
-  //    custom title. Key = image number, Value = caption text.
-  //    Any image without an entry here falls back to the
-  //    DEFAULT_CAPTION below.
+  // CONFIG
   // ----------------------------------------------------------
+  const IMAGE_FOLDER = "Images/";
+  const MANIFEST_URL = "images-manifest.json";
+  const BATCH_SIZE = 24; // how many photos load per batch
+
+  // Optional custom captions — key = image number, value = caption.
+  // Anything without an entry rotates through DEFAULT_CAPTIONS instead.
   const CAPTIONS = {
     1: "Stage Performance",
     2: "Cultural Celebration",
     3: "Traditional Rhythm",
     4: "Festival Night",
-    // 5: "Live Performance",
-    // 6: "Community Gathering",
-    // 7: "Youth Performance",
-    // 8: "Heritage Showcase",
   };
 
-  const DEFAULT_CAPTION = "Performance Moment";
-  const IMAGE_FOLDER = "Images/"; // <-- points to your existing "Images" folder in the repo
-  const MAX_IMAGES_TO_CHECK = 100; // safety ceiling, raise if you ever have more photos
+  const DEFAULT_CAPTIONS = [
+    "Stage Performance",
+    "Cultural Celebration",
+    "Traditional Rhythm",
+    "Festival Night",
+    "Live Performance",
+    "Community Gathering",
+    "Youth Performance",
+    "Heritage Showcase",
+  ];
 
+  function getCaption(num) {
+    if (CAPTIONS[num]) return CAPTIONS[num];
+    return DEFAULT_CAPTIONS[num % DEFAULT_CAPTIONS.length];
+  }
+
+  // ----------------------------------------------------------
+  // ELEMENTS
+  // ----------------------------------------------------------
   const grid = document.getElementById("galleryGrid");
   if (!grid) return; // gallery not on this page
 
+  const loadMoreBtn = document.getElementById("galleryLoadMore");
+  const sentinel = document.getElementById("galleryScrollSentinel");
   const lightbox = document.getElementById("lightbox");
   const lightboxImage = document.getElementById("lightboxImage");
   const lightboxCaption = document.getElementById("lightboxCaption");
@@ -44,81 +75,82 @@
   const prevBtn = document.getElementById("lightboxPrev");
   const nextBtn = document.getElementById("lightboxNext");
 
-  let items = []; // populated once images are detected
+  let totalCount = 0;
+  let loadedCount = 0;
   let currentIndex = 0;
 
   // ----------------------------------------------------------
-  // 2. DETECT IMAGES — tries loading Image1, Image2, Image3...
-  //    and stops at the first one that fails to load. Building
-  //    the gallery only after all checks finish keeps photos
-  //    in the correct numeric order.
+  // BUILD A SINGLE CARD
   // ----------------------------------------------------------
-  function checkImageExists(num) {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.onload = () => resolve(true);
-      img.onerror = () => resolve(false);
-      img.src = `${IMAGE_FOLDER}Image${num}.webp`;
-    });
+  function createCard(num, indexInItems) {
+    const caption = getCaption(num);
+    const src = `${IMAGE_FOLDER}Image${num}.webp`;
+
+    const figure = document.createElement("figure");
+    figure.className = "gallery-card reveal";
+    figure.dataset.index = indexInItems;
+
+    figure.innerHTML = `
+      <button class="gallery-card-btn" type="button" aria-label="Open ${caption} photo in lightbox">
+        <img
+          src="${src}"
+          alt="${caption} — Ekuveri Boli Mulah"
+          loading="lazy"
+          decoding="async"
+          width="600"
+          height="750"
+        />
+        <span class="gallery-overlay">
+          <span class="gallery-overlay-content">
+            <svg class="gallery-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+            <span class="gallery-card-title">${caption}</span>
+          </span>
+        </span>
+      </button>
+    `;
+
+    figure.querySelector(".gallery-card-btn").addEventListener("click", () => openLightbox(indexInItems));
+    return figure;
   }
 
-  async function detectImages() {
-    const found = [];
-    for (let num = 1; num <= MAX_IMAGES_TO_CHECK; num++) {
-      const exists = await checkImageExists(num);
-      if (!exists) break; // stop at first missing number
-      found.push(num);
+  // ----------------------------------------------------------
+  // LOAD NEXT BATCH
+  // ----------------------------------------------------------
+  function loadNextBatch() {
+    if (loadedCount >= totalCount) {
+      loadMoreBtn.hidden = true;
+      return;
     }
-    return found;
-  }
 
-  // ----------------------------------------------------------
-  // 3. BUILD GALLERY CARDS
-  // ----------------------------------------------------------
-  function buildGallery(numbers) {
-    items = numbers.map((num) => ({
-      num,
-      src: `${IMAGE_FOLDER}Image${num}.webp`,
-      caption: CAPTIONS[num] || DEFAULT_CAPTION,
-    }));
-
+    const nextEnd = Math.min(loadedCount + BATCH_SIZE, totalCount);
     const fragment = document.createDocumentFragment();
 
-    items.forEach((item, index) => {
-      const figure = document.createElement("figure");
-      figure.className = "gallery-card reveal";
-      figure.dataset.index = index;
-
-      figure.innerHTML = `
-        <button class="gallery-card-btn" type="button" aria-label="Open ${item.caption} photo in lightbox">
-          <img
-            src="${item.src}"
-            alt="${item.caption} — Ekuveri Boli Mulah"
-            loading="lazy"
-            decoding="async"
-            width="600"
-            height="750"
-          />
-          <span class="gallery-overlay">
-            <span class="gallery-overlay-content">
-              <svg class="gallery-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-              <span class="gallery-card-title">${item.caption}</span>
-            </span>
-          </span>
-        </button>
-      `;
-
-      figure.querySelector(".gallery-card-btn").addEventListener("click", () => openLightbox(index));
-      fragment.appendChild(figure);
-    });
+    for (let num = loadedCount + 1; num <= nextEnd; num++) {
+      fragment.appendChild(createCard(num, num - 1)); // index = num - 1 (0-based)
+    }
 
     grid.appendChild(fragment);
+    loadedCount = nextEnd;
+
     observeReveal();
+
+    loadMoreBtn.hidden = loadedCount >= totalCount;
   }
 
   // ----------------------------------------------------------
-  // 4. LIGHTBOX
+  // LIGHTBOX (operates on image NUMBER, derived on the fly,
+  // so it works correctly even for photos not yet rendered as
+  // cards — e.g. if a visitor jumps via keyboard navigation)
   // ----------------------------------------------------------
+  function getItem(index) {
+    const num = index + 1;
+    return {
+      num,
+      src: `${IMAGE_FOLDER}Image${num}.webp`,
+      caption: getCaption(num),
+    };
+  }
+
   function openLightbox(index) {
     currentIndex = index;
     updateLightboxContent();
@@ -139,19 +171,19 @@
   }
 
   function updateLightboxContent() {
-    const item = items[currentIndex];
+    const item = getItem(currentIndex);
     lightboxImage.src = item.src;
     lightboxImage.alt = `${item.caption} — Ekuveri Boli Mulah`;
     lightboxCaption.textContent = item.caption;
   }
 
   function showNext() {
-    currentIndex = (currentIndex + 1) % items.length;
+    currentIndex = (currentIndex + 1) % totalCount;
     updateLightboxContent();
   }
 
   function showPrev() {
-    currentIndex = (currentIndex - 1 + items.length) % items.length;
+    currentIndex = (currentIndex - 1 + totalCount) % totalCount;
     updateLightboxContent();
   }
 
@@ -184,10 +216,10 @@
   }, { passive: true });
 
   // ----------------------------------------------------------
-  // 5. SCROLL REVEAL ANIMATION
+  // SCROLL REVEAL ANIMATION (for newly added cards)
   // ----------------------------------------------------------
   function observeReveal() {
-    const revealEls = document.querySelectorAll("#gallery .reveal");
+    const revealEls = document.querySelectorAll("#gallery .reveal:not(.is-visible)");
 
     if ("IntersectionObserver" in window) {
       const observer = new IntersectionObserver(
@@ -208,10 +240,41 @@
   }
 
   // ----------------------------------------------------------
-  // 6. INIT
+  // INFINITE SCROLL — loads next batch when the sentinel
+  // element scrolls into view near the bottom of the gallery
   // ----------------------------------------------------------
-  detectImages().then((numbers) => {
-    if (numbers.length === 0) return; // no images found, leave grid empty
-    buildGallery(numbers);
-  });
+  function setupInfiniteScroll() {
+    if (!("IntersectionObserver" in window) || !sentinel) return;
+
+    const scrollObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) loadNextBatch();
+        });
+      },
+      { rootMargin: "400px 0px" } // start loading a bit before it's visible
+    );
+
+    scrollObserver.observe(sentinel);
+  }
+
+  // Manual "Load More" button — works even without scroll trigger
+  loadMoreBtn.addEventListener("click", loadNextBatch);
+
+  // ----------------------------------------------------------
+  // INIT — fetch the manifest, then load the first batch
+  // ----------------------------------------------------------
+  fetch(MANIFEST_URL)
+    .then((res) => res.json())
+    .then((data) => {
+      totalCount = Number(data.count) || 0;
+      if (totalCount <= 0) return;
+
+      loadMoreBtn.hidden = false;
+      loadNextBatch();
+      setupInfiniteScroll();
+    })
+    .catch((err) => {
+      console.error("Gallery: could not load images-manifest.json", err);
+    });
 })();
