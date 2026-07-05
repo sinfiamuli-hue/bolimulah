@@ -47,7 +47,7 @@ window.SITE_TRANSLATIONS = {
     about_repertoire_body: "We offer versatile performance packages scaled perfectly from high-energy welcoming beats to full-scale evening stage productions.",
     perf_tag_1: "Traditional Boduberu",
     perf_tag_2: "Maafathi Neshun",
-    perf_tag_3: "Bandiyaa Neshun",
+    perf_tag_3: "Langiri Jehun",
     perf_tag_4: "Cultural Welcoming (Resorts)",
     perf_tag_5: "Eid Festive Parades",
     perf_tag_6: "Custom Stage Shows",
@@ -118,7 +118,7 @@ window.SITE_TRANSLATIONS = {
     about_repertoire_body: "މަރުޙަބާ ކިޔުމުގެ ހަކަތަގަދަ ރާގުތަކުން ފެށިގެން، ރޭގަނޑުގެ ވަގުތުތަކަށް ޚާއްޞަ ފުރިހަމަ ސްޓޭޖް ޝޯތަކާ ހަމައަށް، ތިޔަބޭފުޅުން ބޭނުންފުޅުވާ ގޮތަށް ފައްތާލެވޭނެ ތަފާތު ޕެކޭޖްތައް އަޅުގަނޑުމެން ފޯރުކޮށްދެމެވެ.",
     perf_tag_1: "ސަގާފީ ބޮޑުބެރު",
     perf_tag_2: "މާފަތި ނެށުން",
-    perf_tag_3: "ބަނޑިޔާ ނެށުން",
+    perf_tag_3: "ލަނގިރި ޖެހުން",
     perf_tag_4: "ސަގާފީ މަރުޙަބާ (ރިޒޯޓް)",
     perf_tag_5: "ޢީދު ފެސްޓިވަލް ޕެރޭޑް",
     perf_tag_6: "ޚާއްޞަ ސްޓޭޖް ޝޯ",
@@ -153,6 +153,6 @@ window.SITE_TRANSLATIONS = {
     footer_title: "އެކުވެރި ބޮލި މުލައް",
     footer_copy: "© އެކުވެރި ބޮލި މުލައް މީޑިއާ. ހުރިހާ ޙައްޤުތަކެއް ރައްކާތެރިކުރެވިފައި.",
     footer_legal: "މިއުޒިކްގެ ހުރިހާ އެރޭންޖްމަންޓްތަކާއި، ކޮރިއޯގްރަފީގެ އެންމެހައި ފަރުމާތަކުގެ އިތުރުން، ޕްރޮމޯޝަނަލް މީޑިއާއަކީ "އެކުވެރި ބޮލި" މުލައް ސަގާފީ ގުރޫޕުގެ ފިކުރީ މުދަލާއި ހާއްސަ މިލްކިއްޔާތެކެވެ.",
-    footer_contact_text: "ކޮޕީރައިޓް © 2026 ސިންފިއާ. ލޯތްބާއެކު ❤️ ފަރުމާކުރީ :"
+    footer_contact_text: "ކޮޕީރައިޓް © 2026 ލޯތްބާއެކު ❤️ ފަރުމާކުރީ ސިންފިއާ.:"
   }
 };
