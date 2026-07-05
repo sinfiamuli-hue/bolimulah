@@ -32,8 +32,8 @@ window.SITE_TRANSLATIONS = {
     // Hero
     hero_eyebrow: "Traditional Maldivian Cultural Ensemble",
     hero_title: "Ekuveri Boli Mulah",
-    hero_sub: "Bringing the authentic rhythm, soul, and vibrant heritage of Maldivian traditional music and dance to your special events.",
-    hero_desc: "Specializing in Boduberu, Maafathi Neshun, Bandiyaa, and custom cultural showcases customized for luxury resorts and local celebrations.",
+    hero_sub: "Infusing your special occasions with the authentic essence of Maldivian music and traditional dance, bringing a vibrant soul to every celebration.",
+    hero_desc: "Specializing in Boduberu, Maafathi Neshun, Langiri, and custom cultural showcases customized for luxury resorts and local celebrations.",
     hero_cta: "Book Our Ensemble",
 
     // About
