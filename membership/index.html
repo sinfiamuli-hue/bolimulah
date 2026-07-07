@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="dv" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>މެންބަރޝިޕް ފޯމު — Ekuveri Boli Mulah</title>
+<meta name="description" content="އެކުވެރި ބޮލި މުލައް membership application form.">
+<link rel="canonical" href="https://bolimulah.sinfia.net/membership/">
+<link rel="icon" type="image/png" href="../assets/logo.png">
+<link rel="apple-touch-icon" href="../assets/logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@500;600;700&family=Noto+Sans+Thaana:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- Same stylesheet as the rest of the site -->
+<link rel="stylesheet" href="../css/styles.css">
+
+<style>
+  /* Page-specific additions only — everything else comes from styles.css */
+  html[lang="dv"] body {
+    font-family: 'Noto Sans Thaana', 'Inter', sans-serif;
+  }
+
+  .back-link {
+    position: fixed; top: 14px; left: 1.5rem; z-index: 101;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    color: var(--muted); text-decoration: none;
+    font-size: 0.82rem; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--white); }
+
+  #membership-hero {
+    min-height: 46svh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 110px 1.5rem 40px;
+    background: radial-gradient(ellipse 80% 60% at 50% 20%, rgba(192,0,64,0.18) 0%, transparent 70%), var(--dark);
+  }
+  .membership-logo {
+    width: 96px; height: 96px; object-fit: cover; border-radius: 50%;
+    box-shadow: 0 0 40px rgba(232,0,107,0.3);
+    margin-bottom: 1.5rem;
+  }
+
+  #membership { background: var(--dark-mid); padding-top: 0; }
+
+  .field-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.2rem;
+  }
+  @media (max-width: 560px) { .field-row { grid-template-columns: 1fr; } }
+
+  .form-group input[dir="ltr"] { text-align: right; }
+
+  .form-group .field-hint {
+    font-size: 0.72rem; color: rgba(255,255,255,0.32);
+    font-family: 'Inter', sans-serif; text-align: left; direction: ltr;
+  }
+
+  .form-group .field-error {
+    font-size: 0.78rem; color: var(--neon-pink); display: none;
+  }
+  .form-group.has-error input { border-color: var(--neon-pink); }
+  .form-group.has-error .field-error { display: block; }
+
+  .form-message.ok { color: #2ecc71; display: block; }
+  .form-message.fail { color: var(--neon-pink); display: block; }
+</style>
+</head>
+<body>
+
+<a href="../" class="back-link">&larr; ފުރަތަމަ ސަފްޙާ</a>
+
+<section id="membership-hero">
+  <img src="../assets/logo.png" alt="Ekuveri Boli Mulah" class="membership-logo">
+  <div class="hero-eyebrow">MEMBERSHIP APPLICATION</div>
+  <h1 class="hero-title" style="font-size:clamp(2rem,6vw,3.2rem);">މެންބަރޝިޕް ފޯމު</h1>
+  <p class="hero-sub">އެކުވެރި ބޮލި މުލައް ގެ މެންބަރަކަށް ވުމަށް ތިރީގައިވާ ފޯމު ފުރިހަމަ ކުރައްވާ</p>
+</section>
+
+<section id="membership">
+  <div class="container">
+    <div class="form-container">
+
+      <form id="membershipForm" novalidate>
+
+        <div class="form-group" id="group-fullName">
+          <label for="fullName">ފުރިހަމަ ނަން</label>
+          <input type="text" id="fullName" name="fullName" autocomplete="name" placeholder="އަޙްމަދު ރަޝީދު">
+          <span class="field-error">ފުރިހަމަ ނަން ލިޔުއްވާ</span>
+        </div>
+
+        <div class="form-group" id="group-address">
+          <label for="address">އެޑްރެސް</label>
+          <input type="text" id="address" name="address" autocomplete="street-address" placeholder="ގެ / މަގު / ރަށް">
+          <span class="field-error">އެޑްރެސް ލިޔުއްވާ</span>
+        </div>
+
+        <div class="form-group" id="group-idNo">
+          <label for="idNo">އައިޑީ ކާޑު ނަންބަރު</label>
+          <input type="text" id="idNo" name="idNo" dir="ltr" placeholder="A123456">
+          <span class="field-hint">Format: A123456</span>
+          <span class="field-error">ސައްޙަ އައިޑީ ކާޑު ނަންބަރެއް ލިޔުއްވާ</span>
+        </div>
+
+        <div class="field-row">
+          <div class="form-group" id="group-age">
+            <label for="age">އުމުރު</label>
+            <input type="number" id="age" name="age" min="1" max="120" inputmode="numeric" placeholder="18">
+            <span class="field-error">ސައްޙަ އުމުރެއް ލިޔުއްވާ (1-120)</span>
+          </div>
+
+          <div class="form-group" id="group-contactNo">
+            <label for="contactNo">ގުޅޭނެ ނަންބަރު</label>
+            <input type="tel" id="contactNo" name="contactNo" dir="ltr" autocomplete="tel" placeholder="7XXXXXX">
+            <span class="field-error">ސައްޙަ ނަންބަރެއް ލިޔުއްވާ</span>
+          </div>
+        </div>
+
+        <button type="submit" class="form-submit-btn" id="submitBtn">ހުށަހަޅާ</button>
+        <p class="form-message" id="formMessage"></p>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+<script>
+const form = document.getElementById('membershipForm');
+const submitBtn = document.getElementById('submitBtn');
+const messageEl = document.getElementById('formMessage');
+
+const rules = [
+  { id: 'fullName',  test: v => v.trim().length >= 2 },
+  { id: 'address',   test: v => v.trim().length >= 3 },
+  { id: 'idNo',      test: v => /^[A-Za-z]{1,2}\d{4,6}$/.test(v.trim()) },
+  { id: 'age',       test: v => Number(v) >= 1 && Number(v) <= 120 },
+  { id: 'contactNo', test: v => /^[0-9+\s-]{7,15}$/.test(v.trim()) },
+];
+
+function validate() {
+  let ok = true;
+  rules.forEach(r => {
+    const input = document.getElementById(r.id);
+    const group = document.getElementById('group-' + r.id);
+    const good = r.test(input.value);
+    group.classList.toggle('has-error', !good);
+    if (!good) ok = false;
+  });
+  return ok;
+}
+
+form.addEventListener('input', e => {
+  const group = e.target.closest('.form-group');
+  if (group && group.classList.contains('has-error')) validate();
+});
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  messageEl.className = 'form-message';
+  messageEl.textContent = '';
+
+  if (!validate()) {
+    messageEl.className = 'form-message fail';
+    messageEl.textContent = 'މަޢުލޫމާތު ފުރިހަމަ ނުވެ ވަނީ. ރަތްކުލައިން ފާހަގަވެފައިވާ ފީލްޑްތައް ބައްލަވާ.';
+    return;
+  }
+
+  const data = {
+    fullName: document.getElementById('fullName').value.trim(),
+    address: document.getElementById('address').value.trim(),
+    idNo: document.getElementById('idNo').value.trim().toUpperCase(),
+    age: Number(document.getElementById('age').value),
+    contactNo: document.getElementById('contactNo').value.trim(),
+    submittedAt: new Date().toISOString(),
+  };
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'ފޮނުވަނީ...';
+
+  try {
+    const res = await fetch('/api/submit-membership', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error(await res.text());
+
+    messageEl.className = 'form-message ok';
+    messageEl.textContent = 'ފޯމު ހުށަހެޅިއްޖެ! ޝުކުރިއްޔާ.';
+    form.reset();
+
+  } catch (err) {
+    // Safety net — never lose a submission if the backend hiccups.
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `membership-${data.idNo || 'submission'}-${Date.now()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    messageEl.className = 'form-message fail';
+    messageEl.textContent = 'ފޮނުވުމުގައި މައްސަލައެއް ދިމާވެއްޖެ. ފައިލެއް ޑައުންލޯޑް ކުރެވިއްޖެ.';
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'ހުށަހަޅާ';
+  }
+});
+</script>
+
+</body>
+</html>
