@@ -38,6 +38,16 @@
   .hero-title, .section-title, .form-submit-btn {
     font-family: 'Mv Izyan Reethi', 'Mv Mohamed Ali', sans-serif;
   }
+  /* This handwritten font runs wider per letter than Playfair Display,
+     so the title needs a smaller scale + more line-height/padding than
+     the homepage's version to avoid clipping on narrow screens. */
+  #membership-hero .hero-title {
+    font-size: clamp(1.5rem, 6.5vw, 2.5rem) !important;
+    line-height: 1.7;
+    white-space: normal;
+    overflow-wrap: break-word;
+    padding: 0 0.5rem;
+  }
   label, .form-message, .field-error {
     font-family: 'Mv Mohamed Ali', 'Inter', sans-serif;
   }
