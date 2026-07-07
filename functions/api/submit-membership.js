@@ -60,7 +60,20 @@ export async function onRequestPost({ request, env }) {
       submittedAt: new Date().toISOString(),
     };
 
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(record, null, 2))));
+    // Encode UTF-8 text (including Dhivehi/Thaana script) to base64 safely.
+    // The old btoa(unescape(encodeURIComponent(...))) trick is unreliable in the
+    // Cloudflare Workers runtime — this uses TextEncoder + a manual byte-to-base64
+    // conversion instead, which works correctly for any Unicode text.
+    function utf8ToBase64(str) {
+      const bytes = new TextEncoder().encode(str);
+      let binary = '';
+      for (let i = 0; i < bytes.length; i++) {
+        binary += String.fromCharCode(bytes[i]);
+      }
+      return btoa(binary);
+    }
+
+    const content = utf8ToBase64(JSON.stringify(record, null, 2));
 
     const ghRes = await fetch(
       `https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
