@@ -2,17 +2,19 @@
 // Route: /api/submit-membership  (because this file lives at functions/api/submit-membership.js)
 //
 // What it does: receives the membership form JSON and commits it as a new
-// file into your GitHub repo (sinfiamuli-hue/bolimulah) using the GitHub
-// Contents API, so every submission lands safely in your repo instead of
-// being downloaded as a local file.
+// file into your PRIVATE data repo (sinfiamuli-hue/bolimulah-membership-data)
+// using the GitHub Contents API. Submissions never touch the public
+// bolimulah website repo, so member data (name, address, ID number, etc.)
+// stays private.
 //
-// Required Cloudflare Pages environment variables (set in
-// Pages project → Settings → Environment variables):
-//   GITHUB_TOKEN   (Encrypted/secret) - fine-grained PAT, Contents: read & write,
-//                  scoped to just the bolimulah repo
-//   GITHUB_OWNER   e.g. "sinfiamuli-hue"
-//   GITHUB_REPO    e.g. "bolimulah"
-//   GITHUB_BRANCH  optional, defaults to "main"
+// Required Cloudflare Pages environment variables (Settings → Variables
+// and secrets, under the Production environment):
+//   GITHUB_TOKEN       (Secret) - fine-grained PAT, Contents: read & write,
+//                       scoped to the bolimulah-membership-data repo
+//                       (and no longer needs access to the public bolimulah repo)
+//   GITHUB_OWNER        e.g. "sinfiamuli-hue"
+//   SUBMISSIONS_REPO    "bolimulah-membership-data"
+//   GITHUB_BRANCH       optional, defaults to "main"
 
 export async function onRequestPost({ request, env }) {
   try {
@@ -34,7 +36,7 @@ export async function onRequestPost({ request, env }) {
     }
 
     const owner = env.GITHUB_OWNER;
-    const repo = env.GITHUB_REPO;
+    const repo = env.SUBMISSIONS_REPO;
     const branch = env.GITHUB_BRANCH || 'main';
     const token = env.GITHUB_TOKEN;
 
