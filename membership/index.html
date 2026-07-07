@@ -38,24 +38,16 @@
   .hero-title, .section-title, .form-submit-btn {
     font-family: 'Mv Izyan Reethi', 'Mv Mohamed Ali', sans-serif;
   }
-  /* This handwritten font runs wider per letter than Playfair Display,
-     so the title needs a smaller scale + more line-height/padding than
-     the homepage's version to avoid clipping on narrow screens. */
-  #membership-hero .hero-title {
-    font-size: clamp(1.5rem, 6.5vw, 2.5rem) !important;
-    line-height: 1.7;
-    white-space: normal;
-    overflow-wrap: break-word;
-    padding: 0 0.5rem;
-  }
   label, .form-message, .field-error {
     font-family: 'Mv Mohamed Ali', 'Inter', sans-serif;
   }
-  /* Typed input text stays in a plain, highly-legible font on purpose —
-     these two are stylised/handwritten-style faces, great for headers
-     and labels, but harder to read at small sizes while someone is
-     actively typing their own details in. */
+  /* Dhivehi text fields (name, address) use the Dhivehi font.
+     ID number and contact number stay in Inter since they're
+     typed in Latin letters/digits (dir="ltr"), and age is numeric. */
   input {
+    font-family: 'Mv Mohamed Ali', 'Inter', sans-serif;
+  }
+  input[dir="ltr"], #age {
     font-family: 'Inter', sans-serif;
   }
 
@@ -73,6 +65,13 @@
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     text-align: center; padding: 110px 1.5rem 40px;
     background: radial-gradient(ellipse 80% 60% at 50% 20%, rgba(192,0,64,0.18) 0%, transparent 70%), var(--dark);
+  }
+  #membership-hero .hero-title {
+    font-size: clamp(1.6rem, 5.2vw, 2.6rem);
+    line-height: 1.3;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    letter-spacing: 0;
   }
   .membership-logo {
     width: 96px; height: 96px; object-fit: cover; border-radius: 50%;
@@ -111,7 +110,7 @@
 <section id="membership-hero">
   <img src="../assets/logo.png" alt="Ekuveri Boli Mulah" class="membership-logo">
   <div class="hero-eyebrow">MEMBERSHIP APPLICATION</div>
-  <h1 class="hero-title" style="font-size:clamp(2rem,6vw,3.2rem);">މެންބަރޝިޕް ފޯމު</h1>
+  <h1 class="hero-title">މެންބަރޝިޕް ފޯމު</h1>
   <p class="hero-sub">އެކުވެރި ބޮލި މުލައް ގެ މެންބަރަކަށް ވުމަށް ތިރީގައިވާ ފޯމު ފުރިހަމަ ކުރައްވާ</p>
 </section>
 
