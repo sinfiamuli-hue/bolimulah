@@ -30,7 +30,7 @@ export async function onRequestPost({ request, env }) {
 
     if (errors.length) {
       return new Response(JSON.stringify({ ok: false, error: 'Invalid fields: ' + errors.join(', ') }), {
-        status: 400,
+        status: 200,
         headers: { 'Content-Type': 'application/json' },
       });
     }
@@ -42,7 +42,7 @@ export async function onRequestPost({ request, env }) {
 
     if (!owner || !repo || !token) {
       return new Response(JSON.stringify({ ok: false, error: 'Server not configured' }), {
-        status: 500,
+        status: 200,
         headers: { 'Content-Type': 'application/json' },
       });
     }
@@ -96,7 +96,7 @@ export async function onRequestPost({ request, env }) {
     if (!ghRes.ok) {
       const detail = await ghRes.text();
       return new Response(JSON.stringify({ ok: false, error: 'GitHub save failed: ' + detail }), {
-        status: 502,
+        status: 200,
         headers: { 'Content-Type': 'application/json' },
       });
     }
@@ -108,7 +108,7 @@ export async function onRequestPost({ request, env }) {
 
   } catch (err) {
     return new Response(JSON.stringify({ ok: false, error: err.message }), {
-      status: 500,
+      status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
   }
