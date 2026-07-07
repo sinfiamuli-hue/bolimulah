@@ -220,13 +220,15 @@ form.addEventListener('submit', async (e) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     });
-    if (!res.ok) throw new Error(await res.text());
+    const result = await res.json();
+    if (!result.ok) throw new Error(result.error || 'Unknown error');
 
     messageEl.className = 'form-message ok';
     messageEl.textContent = 'ފޯމު ހުށަހެޅިއްޖެ! ޝުކުރިއްޔާ.';
     form.reset();
 
   } catch (err) {
+    console.error('Membership form submission error:', err);
     // Safety net — never lose a submission if the backend hiccups.
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
