@@ -114,10 +114,18 @@
     background-position: left 1rem center;
     background-size: 12px 8px;
   }
+  .form-group select#position {
+    accent-color: var(--neon-pink, #e8006b);
+  }
   .form-group select#position option {
     background: #2a2a2a;
     color: #ffffff;
     padding: 10px;
+  }
+  .form-group select#position option:checked,
+  .form-group select#position option:hover {
+    background: var(--neon-pink, #e8006b) !important;
+    color: #ffffff !important;
   }
   .form-group .position-description {
     display: none;
