@@ -27,6 +27,7 @@ export async function onRequestPost({ request, env }) {
     if (!/^[A-Za-z]{1,2}\d{4,6}$/.test(String(data.idNo || '').trim())) errors.push('idNo');
     if (!(Number(data.age) >= 1 && Number(data.age) <= 120)) errors.push('age');
     if (!/^[0-9+\s-]{7,15}$/.test(String(data.contactNo || '').trim())) errors.push('contactNo');
+    if (!data.position || String(data.position).trim().length === 0) errors.push('position');
 
     if (errors.length) {
       return new Response(JSON.stringify({ ok: false, error: 'Invalid fields: ' + errors.join(', ') }), {
@@ -47,9 +48,20 @@ export async function onRequestPost({ request, env }) {
       });
     }
 
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const now = new Date();
+    const timestamp = now.toISOString().replace(/[:.]/g, '-');
     const safeId = String(data.idNo).trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
     const path = `submissions/${safeId || 'unknown'}-${timestamp}.json`;
+
+    // Cloudflare Workers' Date object is always UTC — there is no server
+    // "local time" to rely on. Maldives is a fixed UTC+5 offset with no DST,
+    // so we convert manually to make submittedAt readable at a glance.
+    function toMaldivesTime(d) {
+      const pad = n => String(n).padStart(2, '0');
+      const md = new Date(d.getTime() + 5 * 60 * 60 * 1000);
+      return `${md.getUTCFullYear()}-${pad(md.getUTCMonth() + 1)}-${pad(md.getUTCDate())} ` +
+             `${pad(md.getUTCHours())}:${pad(md.getUTCMinutes())}:${pad(md.getUTCSeconds())} +05:00`;
+    }
 
     const record = {
       fullName: String(data.fullName).trim(),
@@ -57,7 +69,8 @@ export async function onRequestPost({ request, env }) {
       idNo: String(data.idNo).trim().toUpperCase(),
       age: Number(data.age),
       contactNo: String(data.contactNo).trim(),
-      submittedAt: new Date().toISOString(),
+      position: String(data.position).trim(),
+      submittedAt: toMaldivesTime(now),
     };
 
     // Encode UTF-8 text (including Dhivehi/Thaana script) to base64 safely.
