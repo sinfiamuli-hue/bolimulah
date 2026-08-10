@@ -79,6 +79,19 @@
     margin-bottom: 1.5rem;
   }
 
+  .registry-no {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid var(--neon-pink, #e8006b);
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+    color: rgba(255,255,255,0.85);
+    direction: ltr;
+  }
+
   #membership { background: var(--dark-mid); padding-top: 0; }
 
   .field-row {
@@ -116,6 +129,11 @@
   }
   .form-group select#position {
     accent-color: var(--neon-pink, #e8006b);
+    background: rgba(255,255,255,0.05);
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
   }
   .form-group select#position option {
     background: #2a2a2a;
@@ -139,6 +157,34 @@
     border-radius: 4px;
   }
   .form-group .position-description.show { display: block; }
+
+  /* Membership information block */
+  .membership-info {
+    max-width: 640px;
+    margin: 0 auto 2rem;
+    padding: 1.2rem 1.4rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+  }
+  .membership-info h2 {
+    font-family: 'Mv Izyan Reethi', 'Mv Mohamed Ali', sans-serif;
+    font-size: 1.05rem;
+    color: var(--white, #fff);
+    margin: 0 0 0.8rem;
+  }
+  .membership-info ul {
+    margin: 0;
+    padding-right: 1.2rem;
+    list-style: disc;
+  }
+  .membership-info li {
+    color: rgba(255,255,255,0.72);
+    font-size: 0.92rem;
+    line-height: 1.9;
+    margin-bottom: 0.7rem;
+  }
+  .membership-info li:last-child { margin-bottom: 0; }
 </style>
 </head>
 <body>
@@ -148,12 +194,21 @@
 <section id="membership-hero">
   <img src="../assets/logo.png" alt="Ekuveri Boli Mulah" class="membership-logo">
   <div class="hero-eyebrow">MEMBERSHIP APPLICATION</div>
-  <h1 class="hero-title">މެންބަރޝިޕް ފޯމު</h1>
+  <h1 class="hero-title">މެންބަރުކަމަށް އެދި ހުށަހަޅާ ފޯމު</h1>
   <p class="hero-sub">އެކުވެރި ބޮލި މުލައް ގެ މެންބަރަކަށް ވުމަށް ތިރީގައިވާ ފޯމު ފުރިހަމަ ކުރައްވާ</p>
+  <span class="registry-no">10-NGO/CERT/2026/70</span>
 </section>
 
 <section id="membership">
   <div class="container">
+    <div class="membership-info">
+      <h2>މެންބަރުކަމާ ބެހޭ މަޢުލޫމާތު:</h2>
+      <ul>
+        <li>މި ޖަމްޢިއްޔާގެ މެންބަރުކަމުގެ ފުރުޞަތު ހުޅުވާލެވިފައިވަނީ މ. މުލަކަށް އުފަން ދިވެހި ރައްޔިތުންނަށާއި، މ. މުލަކަށް އުފަން ފަރާތަކާ ކައިވެނިކޮށްގެން އުޅޭ ދިވެހި ރައްޔިތުންނަށެވެ.</li>
+        <li>މެންބަރުކަމަށް އެދި ހުށަހަޅާނީ އެކަމަށް ކަނޑައެޅިފައިވާ މި ރަސްމީ ފޯމު ފުރިހަމަކުރުމަށްފަހު، ޖަމްޢިއްޔާގެ އިދާރާއަށެވެ. މެންބަރުކަމާ ގުޅޭ އިތުރު ތަފްސީލީ މަޢުލޫމާތު މި ޖަމްޢިއްޔާގެ ހިންގާ ގަވާއިދުން ލިބިވަޑައިގަންނަވާނެއެވެ.</li>
+      </ul>
+    </div>
+
     <div class="form-container">
 
       <form id="membershipForm" novalidate>
