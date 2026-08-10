@@ -185,6 +185,49 @@
     margin-bottom: 0.7rem;
   }
   .membership-info li:last-child { margin-bottom: 0; }
+
+  /* Declaration checkbox */
+  .declaration-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    margin: 0.5rem 0 1.4rem;
+    padding: 1rem 1.1rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+  }
+  .declaration-group.has-error {
+    border-color: var(--neon-pink, #e8006b);
+  }
+  .declaration-group input[type="checkbox"] {
+    width: 18px; height: 18px;
+    flex: 0 0 18px;
+    margin-top: 0.2rem;
+    accent-color: var(--neon-pink, #e8006b);
+    cursor: pointer;
+  }
+  .declaration-group label {
+    font-size: 0.85rem;
+    line-height: 1.9;
+    color: rgba(255,255,255,0.75);
+    cursor: pointer;
+  }
+  .declaration-group label strong {
+    display: block;
+    color: var(--white, #fff);
+    font-family: 'Mv Izyan Reethi', 'Mv Mohamed Ali', sans-serif;
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+  }
+  .declaration-group .field-error {
+    display: none;
+    width: 100%;
+    margin-top: 0.4rem;
+    font-size: 0.78rem;
+    color: var(--neon-pink);
+  }
+  .declaration-group.has-error .field-error { display: block; }
 </style>
 </head>
 <body>
@@ -266,6 +309,15 @@
           <span class="field-error">މަޤާމެއް އިޚުތިޔާރު ކުރައްވާ</span>
         </div>
 
+        <div class="declaration-group" id="group-declaration">
+          <input type="checkbox" id="declaration" name="declaration">
+          <label for="declaration">
+            <strong>އިޤްރާރު:</strong>
+            މި ފޯމުގައި އަޅުގަނޑު ހުށަހަޅާފައިވާ އެންމެހައި މަޢުލޫމާތުތަކަކީ ތެދު އަދި ޞައްޙަ މަޢުލޫމާތުތަކެއްކަމަށް އިޤްރާރުވަމެވެ. އަދި މި ފޯމުގައި އަޅުގަނޑު ދީފައިވާ މަޢުލޫމާތެއްގެ ސައްޚަކަން ކަށަވަރުކުރުމަށް މި ޖަމްޢިއްޔާއިން ކުރަންޖެހޭ މަސައްކަތްތައް ކުރުމަށް އަޅުގަނޑުގެ އިއުތިރާޒެއް ނެތްކަމުގައި ދަންނަވަމެވެ.
+            <span class="field-error">ކުރިއަށްދިޔުމުގެ ކުރިން އިޤްރާރުގައި ފާހަގަ ޖައްސަވާ</span>
+          </label>
+        </div>
+
         <button type="submit" class="form-submit-btn" id="submitBtn">ހުށަހަޅާ</button>
         <p class="form-message" id="formMessage"></p>
       </form>
@@ -327,12 +379,22 @@ function validate() {
     group.classList.toggle('has-error', !good);
     if (!good) ok = false;
   });
+
+  const declarationChecked = document.getElementById('declaration').checked;
+  document.getElementById('group-declaration').classList.toggle('has-error', !declarationChecked);
+  if (!declarationChecked) ok = false;
+
   return ok;
 }
 
 form.addEventListener('input', e => {
   const group = e.target.closest('.form-group');
   if (group && group.classList.contains('has-error')) validate();
+});
+
+document.getElementById('declaration').addEventListener('change', () => {
+  const group = document.getElementById('group-declaration');
+  if (group.classList.contains('has-error')) validate();
 });
 
 form.addEventListener('submit', async (e) => {
