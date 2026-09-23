@@ -11,15 +11,16 @@
 /* 1. Custom Dhivehi fonts — loaded locally, used only in Dhivehi mode    */
 /* ---------------------------------------------------------------------- */
 @font-face {
-  font-family: 'MV Izyanreethi Bold';
-  src: url('../fonts/MvIzyanreethi-Bold.ttf') format('truetype');
+  font-family: 'MV Eamaan XP';
+  src: url('../fonts/Mv Eamaan XP.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'MV Mohamed Ali';
-  src: url('../fonts/Mv-Mohamed-Ali-Final.ttf') format('truetype');
+  font-family: 'Faruma';
+  src: url('../fonts/Faruma.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -69,7 +70,7 @@ body.lang-dv .i18n-en {
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
 }
 .lang-btn[data-lang="dv"] {
-  font-family: 'MV Izyanreethi Bold', 'Inter', sans-serif;
+  font-family: 'MV Eamaan XP', 'Inter', sans-serif;
   font-size: 0.8rem;
 }
 .lang-btn:hover {
@@ -82,9 +83,9 @@ body.lang-dv .i18n-en {
 }
 
 /* ---------------------------------------------------------------------- */
-/* 3. Dhivehi typography — headings use the Bold display font,           */
-/*    body copy uses the readable text font. Forms are explicitly        */
-/*    excluded so they are never restyled or mirrored.                   */
+/* 3. Dhivehi typography — headings use MV Eamaan XP,                      */
+/*    body copy uses Faruma. Forms are explicitly excluded so             */
+/*    they are never restyled or mirrored.                               */
 /* ---------------------------------------------------------------------- */
 html[lang="dv"] h1,
 html[lang="dv"] h2,
@@ -111,7 +112,7 @@ html[lang="dv"] .contact-name,
 html[lang="dv"] .form-group label,
 html[lang="dv"] .form-submit-btn,
 html[lang="dv"] .lang-btn[data-lang="dv"] {
-  font-family: 'MV Izyanreethi Bold', 'Playfair Display', serif !important;
+  font-family: 'MV Eamaan XP', 'Playfair Display', serif !important;
 }
 
 html[lang="dv"] body,
@@ -124,18 +125,10 @@ html[lang="dv"] .gallery-description,
 html[lang="dv"] .footer-copy,
 html[lang="dv"] .footer-legal,
 html[lang="dv"] .footer-contact {
-  font-family: 'MV Mohamed Ali', 'Inter', sans-serif;
+  font-family: 'Faruma', 'Inter', sans-serif;
 }
 
-/* Booking form: labels, placeholders, and the submit button now DO
-   translate to Dhivehi (see the i18n-en/i18n-dv spans and the
-   data-i18n-placeholder attributes in index.html), and so does the
-   coordinator name shown above each WhatsApp button — edit its
-   .i18n-dv span directly in index.html with the native spelling.
-   Only what the visitor actually types/picks — the input and textarea
-   fields themselves — stays LTR and in a plain Latin font, since
-   dates/emails/phone numbers read better that way regardless of
-   language. Phone links and social handles are also kept as authored. */
+/* Booking form: inputs, textarea, phone links, and handles remain LTR */
 html[lang="dv"] #digitalBookingForm input,
 html[lang="dv"] #digitalBookingForm textarea,
 html[lang="dv"] .contact-phone,
@@ -146,26 +139,15 @@ html[lang="dv"] .footer-contact a {
   unicode-bidi: isolate;
 }
 
-/* The line above forces LTR/Latin font on the whole WhatsApp button
-   (needed since it's a phone link), but that was also dragging its
-   visible "Chat on WhatsApp" text down with it. This puts the Dhivehi
-   wording back in the correct font and reading direction. */
+/* Restores Faruma font and RTL for WhatsApp Dhivehi button text */
 html[lang="dv"] .contact-phone .i18n-dv {
-  font-family: 'MV Mohamed Ali', 'Inter', sans-serif;
+  font-family: 'Faruma', 'Inter', sans-serif;
   direction: rtl;
   unicode-bidi: plaintext;
 }
 
 /* ---------------------------------------------------------------------- */
-/* 3b. Dhivehi header title fix                                          */
-/*     The English hero title uses a gradient "background-clip: text"    */
-/*     effect to fill the letters with color. That technique is known   */
-/*     to drop diacritic marks on complex scripts like Thaana — the     */
-/*     gradient mask simply fails to paint over some of the marks, so   */
-/*     parts of the word go invisible even though there's room for them.*/
-/*     So in Dhivehi mode we turn off the gradient trick and use a      */
-/*     solid color instead, plus a looser line-height for extra safety. */
-/*     The English hero title is completely untouched.                  */
+/* 3b. Dhivehi header title styling                                      */
 /* ---------------------------------------------------------------------- */
 html[lang="dv"] .hero-title {
   background: none;
@@ -183,9 +165,7 @@ html[lang="dv"] .section-title {
 }
 
 /* ---------------------------------------------------------------------- */
-/* 4. RTL layout — only where it improves the Dhivehi reading experience. */
-/*    Numbers, phone links, and the booking form's input fields always   */
-/*    stay LTR; labels and the submit button follow the page's RTL flow. */
+/* 4. RTL layout rules                                                   */
 /* ---------------------------------------------------------------------- */
 html[dir="rtl"] .nav-links {
   flex-direction: row-reverse;
@@ -205,9 +185,6 @@ html[dir="rtl"] .hero-cta svg {
   transform: scaleX(-1);
 }
 
-/* Text-heavy blocks read naturally right-to-left; grids/cards keep their
-   existing responsive flow (CSS Grid/Flexbox wrap direction is unaffected
-   unless explicitly reversed above), so layout integrity is preserved. */
 html[dir="rtl"] .section-body,
 html[dir="rtl"] .hero-sub,
 html[dir="rtl"] .hero-desc,
